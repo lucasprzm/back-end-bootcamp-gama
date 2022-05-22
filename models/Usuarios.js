@@ -9,16 +9,16 @@ const Usuarios = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    nome: {
+    nomeUsuario: {
       type: DataTypes.STRING,
     },
-    email: {
+    emailUsuario: {
       type: DataTypes.STRING,
     },
-    senha: {
+    senhaUsuario: {
       type: DataTypes.STRING,
     },
-    avatar: {
+    avatarUsuario: {
       type: DataTypes.STRING,
       allowNull: true,
     },
