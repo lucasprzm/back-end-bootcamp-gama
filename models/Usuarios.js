@@ -18,14 +18,12 @@ const Usuarios = db.define(
     senha: {
       type: DataTypes.STRING,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
+    avatar: {
+      type: DataTypes.STRING,
     },
   },
   {
+    timestamps: false,
     tableName: "usuarios",
   }
 );
