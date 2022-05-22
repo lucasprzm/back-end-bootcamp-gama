@@ -5,14 +5,14 @@ const usuariosController = {
   async registro(req, res) {
     const { nome, email, senha } = req.body;
     const novaSenha = bcrypt.hashSync(senha, 10);
-    const usuario = await Usuarios.findOne({
-      where: {
-        email,
-      },
-    });
-    if (usuario) {
-      return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
-    }
+    // const usuario = await Usuarios.findOne({
+    //   where: {
+    //     email,
+    //   },
+    // });
+    // if (usuario) {
+    //   return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
+    // }
     let novoUsuario = await Usuarios.create({
       nome,
       email,
