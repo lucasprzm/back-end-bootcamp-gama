@@ -16,7 +16,7 @@ const authController = {
     if (!usuario) {
       return res.status(400).json("E-mail não cadastrado!");
     }
-    if (!bcrypt.compareSync(senhaUsuario, usuario.senhaUsuario)) {
+    if (bcrypt.compareSync(senhaUsuario, usuario.senhaUsuario)) {
       return res.status(401).json("Senha inválida!");
     }
     const token = jwt.sign(
