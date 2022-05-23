@@ -1,1 +1,1 @@
-web:node src/app.js
+web: $env:DEBUG='back-end-projeto-gama:*'; npm start
