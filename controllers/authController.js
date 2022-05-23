@@ -6,24 +6,24 @@ const secret = require("../configs/secret");
 
 const authController = {
   async login(req, res) {
-    const { email, senha } = req.body;
+    const { emailUsuario, senhaUsuario } = req.body;
 
     const usuario = await Usuarios.findOne({
       where: {
-        email,
+        emailUsuario,
       },
     });
     if (!usuario) {
       return res.status(400).json("E-mail não cadastrado!");
     }
-    if (!bcrypt.compareSync(senha, usuario.senha)) {
+    if (!bcrypt.compareSync(senhaUsuario, usuario.senhaUsuario)) {
       return res.status(401).json("Senha inválida!");
     }
     const token = jwt.sign(
       {
-        id: usuario.id,
-        email: usuario.email,
-        nome: usuario.nome,
+        id: usuario.idUsuario,
+        email: usuario.emailUsuario,
+        nome: usuario.nomeUsuario,
       },
       secret.key,
       { expiresIn: "24h" }
