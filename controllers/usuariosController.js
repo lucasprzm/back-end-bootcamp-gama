@@ -3,8 +3,8 @@ const bcrypt = require("bcryptjs");
 
 const usuariosController = {
   async registro(req, res) {
-    const { nome, email, senha } = req.body;
-    const novaSenha = bcrypt.hashSync(senha, 10);
+    const { nomeUsuario, emailUsuario, senhaUsuario } = req.body;
+    const novaSenha = bcrypt.hashSync(senhaUsuario, 10);
     // const usuario = await Usuarios.findOne({
     //   where: {
     //     email,
@@ -14,14 +14,14 @@ const usuariosController = {
     //   return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
     // }
     let novoUsuario = await Usuarios.create({
-      nome,
-      email,
-      senha: novaSenha,
+      nomeUsuario,
+      emailUsuario,
+      senhaUsuario: novaSenha,
     });
 
     return res.status(201).json({
-      nome: novoUsuario.nome,
-      email: novoUsuario.email,
+      nome: novoUsuario.nomeUsuario,
+      email: novoUsuario.emailUsuario,
     });
   },
 };
