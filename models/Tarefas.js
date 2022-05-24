@@ -9,8 +9,17 @@ const Tarefas = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    metaQualitativa: {
+    tarefa: {
       type: DataTypes.STRING,
+    },
+    diaTarefa: {
+      type: DataTypes.STRING,
+    },
+    numeroTarefa: {
+      type: DataTypes.INTEGER,
+    },
+    pontosTarefa: {
+      type: DataTypes.INTEGER,
     },
   },
   {
