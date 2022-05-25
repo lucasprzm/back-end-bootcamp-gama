@@ -22,6 +22,9 @@ const Usuarios = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    pontos: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     timestamps: false,
