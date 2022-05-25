@@ -37,8 +37,7 @@ const metasController = {
         MetasQualitativaIdMetaQualitativa: metaUsuario.MetasQualitativas[0].idMetaQualitativa,
       },
     });
-    //res.json(metaUsuario.MetasQualitativas[0].idMetaQualitativa);
-    res.json(videos);
+    return res.json(videos);
   },
 };
 

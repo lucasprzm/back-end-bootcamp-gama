@@ -1,7 +1,4 @@
 const db = require("../database");
-const { DataTypes } = require("sequelize");
-const MetasQualitativas = require("./MetasQualitativas");
-const Usuarios = require("./Usuarios");
 
 const MQualitativas_has_Usuarios = db.define(
   "MQualitativas_has_Usuarios",
