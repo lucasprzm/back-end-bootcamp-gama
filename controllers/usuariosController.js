@@ -1,4 +1,4 @@
-const { Usuarios } = require("../models");
+const { Usuarios, Tarefas_has_Usuarios } = require("../models");
 const bcrypt = require("bcryptjs");
 
 const usuariosController = {
@@ -13,12 +13,17 @@ const usuariosController = {
     if (usuario) {
       return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
     }
-    await Usuarios.create({
+    const usuarioCriado = await Usuarios.create({
       nomeUsuario,
       emailUsuario,
       senhaUsuario: novaSenha,
+      pontos: 0,
     });
-
+    // console.log(usuarioCriado);
+    await Tarefas_has_Usuarios.create({
+      TarefaIdTarefas: 4,
+      UsuarioIdUsuario: usuarioCriado.idUsuario,
+    });
     return res.status(201).json("Usuário Cadastrado");
   },
 };
