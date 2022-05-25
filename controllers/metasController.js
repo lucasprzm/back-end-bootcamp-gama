@@ -1,4 +1,4 @@
-const { MetasQualitativas, MQualitativas_has_Usuarios } = require("../models");
+const { Usuarios, MetasQualitativas, MQualitativas_has_Usuarios, Videos } = require("../models");
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret");
 
@@ -14,12 +14,31 @@ const metasController = {
     });
     const { idMeta } = req.body;
     await MQualitativas_has_Usuarios.create({
-      idUsuarioFK: idUsuario,
-      idMetaQualitativaFK: idMeta,
+      UsuarioIdUsuario: idUsuario,
+      MetasQualitativaIdMetaQualitativa: idMeta,
     });
 
     //console.log(idUsuario);
     res.sendStatus(201);
+  },
+  async buscarVideosPorMeta(req, res) {
+    const token = req.headers["authorization"];
+    const idUsuario = jwt.verify(token, secret.key, (err, decoded) => {
+      return decoded.idUsuario;
+    });
+    const metaUsuario = await Usuarios.findOne({
+      where: { idUsuario: idUsuario },
+      include: {
+        model: MetasQualitativas,
+      },
+    });
+    const videos = await Videos.findAll({
+      where: {
+        MetasQualitativaIdMetaQualitativa: metaUsuario.MetasQualitativas[0].idMetaQualitativa,
+      },
+    });
+    //res.json(metaUsuario.MetasQualitativas[0].idMetaQualitativa);
+    res.json(videos);
   },
 };
 

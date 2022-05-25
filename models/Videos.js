@@ -13,13 +13,6 @@ const Videos = db.define(
     urlVideo: {
       type: DataTypes.STRING,
     },
-    idMetaQualitativaFK: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: MetasQualitativas,
-        key: "idMetaQualitativa",
-      },
-    },
   },
   {
     timestamps: false,

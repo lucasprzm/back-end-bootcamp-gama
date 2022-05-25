@@ -5,4 +5,5 @@ const router = require("./users");
 
 router.get("/", metasController.enviarMetas);
 router.post("/salvar", metasController.salvarMetas);
+router.get("/videos", metasController.buscarVideosPorMeta);
 module.exports = router;
