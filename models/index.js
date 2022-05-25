@@ -3,12 +3,10 @@ const MetasQualitativas = require("./MetasQualitativas");
 const Tarefas = require("./Tarefas");
 const Videos = require("./Videos");
 const MQualitativas_has_Usuarios = require("./MQualitativas_Usuarios");
-const Pontuacoes = require("./Pontuacoes");
+const Tarefas_has_Usuarios = require("./Tarefas_Usuarios");
 
-Tarefas.hasOne(Pontuacoes);
-Pontuacoes.belongsTo(Tarefas);
-Usuarios.hasOne(Pontuacoes);
-Pontuacoes.belongsTo(Usuarios);
+Tarefas.belongsToMany(Usuarios, { through: Tarefas_has_Usuarios });
+Usuarios.belongsToMany(Tarefas, { through: Tarefas_has_Usuarios });
 MetasQualitativas.hasMany(Videos);
 Videos.belongsTo(MetasQualitativas);
 MetasQualitativas.belongsToMany(Usuarios, { through: MQualitativas_has_Usuarios });
@@ -20,5 +18,5 @@ module.exports = {
   Tarefas,
   Videos,
   MQualitativas_has_Usuarios,
-  Pontuacoes,
+  Tarefas_has_Usuarios,
 };
