@@ -18,7 +18,7 @@ const MetasFinanceiras = db.define(
         key: "idUsuario",
       },
     },
-    idMetaQualitativaFK: {
+    idmetaQualitativaFK: {
       type: DataTypes.INTEGER,
       references: {
         model: MetasQualitativas,
