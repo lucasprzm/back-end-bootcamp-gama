@@ -3,23 +3,21 @@ const { DataTypes } = require("sequelize");
 const MetasQualitativas = require("./MetasQualitativas");
 const Usuarios = require("./Usuarios");
 
-const MetasFinanceiras = db.define(
-  "MetasFinanceiras",
+const MQualitativas_has_Usuarios = db.define(
+  "MQualitativas_has_Usuarios",
   {
-    idmetaFinanceira: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     idUsuarioFK: {
       type: DataTypes.INTEGER,
+      unique: true,
+      primaryKey: true,
       references: {
         model: Usuarios,
         key: "idUsuario",
       },
     },
-    idmetaQualitativaFK: {
+    idMetaQualitativaFK: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       references: {
         model: MetasQualitativas,
         key: "idMetaQualitativa",
@@ -28,8 +26,8 @@ const MetasFinanceiras = db.define(
   },
   {
     timestamps: false,
-    tableName: "metasfinanceiras",
+    tableName: "metasqualitativas_has_usuarios",
   }
 );
 
-module.exports = MetasFinanceiras;
+module.exports = MQualitativas_has_Usuarios;
