@@ -1,5 +1,6 @@
+var express = require("express");
+var router = express.Router();
 const metasController = require("../controllers/metasController");
-const router = require("./users");
 
 // Rota para pegar as metas disponíveis
 
