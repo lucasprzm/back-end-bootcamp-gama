@@ -1,7 +1,7 @@
 const { Usuarios, Tarefas, Tarefas_has_Usuarios } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 const tarefasController = {
   async adicionarPontos(req, res, next) {
