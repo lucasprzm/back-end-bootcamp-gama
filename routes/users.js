@@ -9,5 +9,8 @@ router.post("/new", usuariosController.registro);
 
 // Login de usuário
 router.post("/login", authController.login);
+
+// Buscar pontos
+router.get("/pontos", usuariosController.buscarPontos);
 // router.get("/testeAuth", checkToken, (req, res) => res.json("Deu bom!"));
 module.exports = router;
