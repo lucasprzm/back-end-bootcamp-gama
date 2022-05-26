@@ -24,7 +24,7 @@ const usuariosController = {
       TarefaIdTarefas: 4,
       UsuarioIdUsuario: usuarioCriado.idUsuario,
     });
-    return res.status(201).json("Usuário Cadastrado");
+    return res.status(201).json("Usuário Criado!");
   },
 };
 
