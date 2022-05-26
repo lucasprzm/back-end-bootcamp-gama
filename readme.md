@@ -8,9 +8,7 @@ NodeJS com Express, Sequelize, MySQL, Express Validator, BcryptJS e JWT.
 
 ##### Endpoints
 
-- Criação de Usuário - POST - /users/new
-
-- Login de Usuário - POST - /users/login
+- Documentação: https://documenter.getpostman.com/view/18322573/Uz5AryNP
 
 ##### Instruções para rodar o projeto
 
