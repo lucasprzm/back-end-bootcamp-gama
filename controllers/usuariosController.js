@@ -5,19 +5,19 @@ const secret = require("../configs/secret");
 
 const usuariosController = {
   async registro(req, res) {
-    const { nomeUsuario, emailUsuario, senhaUsuario } = req.body;
-    const novaSenha = bcrypt.hashSync(senhaUsuario, 10);
+    const { name, email, password } = req.body;
+    const novaSenha = bcrypt.hashSync(password, 10);
     const usuario = await Usuarios.findOne({
       where: {
-        emailUsuario,
+        emailUsuario: email,
       },
     });
     if (usuario) {
       return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
     }
     const usuarioCriado = await Usuarios.create({
-      nomeUsuario,
-      emailUsuario,
+      nomeUsuario: name,
+      emailUsuario: email,
       senhaUsuario: novaSenha,
       pontos: 0,
     });
