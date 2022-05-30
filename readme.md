@@ -1,4 +1,4 @@
-## Teste Back-End para o Projeto Bootcamp Gama
+## Back-End para o Projeto Bootcamp Gama
 
 ### Tecnologias Utilizadas
 
