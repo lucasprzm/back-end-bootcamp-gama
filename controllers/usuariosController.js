@@ -21,7 +21,6 @@ const usuariosController = {
       senhaUsuario: novaSenha,
       pontos: 0,
     });
-    // console.log(usuarioCriado);
     await Tarefas_has_Usuarios.create({
       TarefaIdTarefas: 4,
       UsuarioIdUsuario: usuarioCriado.idUsuario,
@@ -36,7 +35,7 @@ const usuariosController = {
         idUsuario: id,
       },
     });
-    res.json(usuario.pontos);
+    return res.json(usuario.pontos);
   },
   async userName(req,res) {
     const token = req.headers["authorization"];
@@ -46,7 +45,7 @@ const usuariosController = {
         idUsuario: id,
       },
     });
-    res.json(usuario.nomeUsuario);
+    return res.json(usuario.nomeUsuario);
   }
 };
 
