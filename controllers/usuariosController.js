@@ -38,8 +38,11 @@ const usuariosController = {
     return res.json(usuario.pontos);
   },
   async userName(req,res) {
-    const token = req.headers["Authorization"];
-    const id = jwt.verify(token, secret.key, (err, decoded) => {return decoded.idUsuario});
+    const token = req.headers["authorization"];
+    const id = jwt.verify(token, secret.key, (err, decoded) => {
+      console.log(decoded)
+      return decoded.idUsuario
+    });
     const usuario = await Usuarios.findOne({
       where: {
         idUsuario: id,
