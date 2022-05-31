@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret");
-module.exports = function checkToken(req, res, next) {
+
+
+module.exports = function checkToken(req, res) {
   const jwtAuth = req.headers["authorization"];
 
   // Efetuando a validação do JWT:
@@ -11,5 +13,5 @@ module.exports = function checkToken(req, res, next) {
       return;
     }
   });
-  next();
+  return res.status(200).end();
 };

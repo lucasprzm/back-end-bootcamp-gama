@@ -40,6 +40,18 @@ const usuariosController = {
     });
     res.json(usuario.pontos);
   },
+  async userName(req,res) {
+    const token = req.headers["authorization"];
+    const idUsuario = jwt.verify(token, secret.key, (err, decoded) => {
+      return decoded.idUsuario;
+    });
+    const usuario = await Usuarios.findOne({
+      where: {
+        idUsuario: idUsuario,
+      },
+    });
+    res.json(usuario.nomeUsuario);
+  }
 };
 
 module.exports = usuariosController;
