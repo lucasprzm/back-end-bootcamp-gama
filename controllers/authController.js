@@ -14,10 +14,10 @@ const authController = {
       },
     });
     if (!usuario) {
-      return res.status(400).json("E-mail não cadastrado!");
+      return res.status(400).json({errorMessage: "Senha ou e-mail incorreto!"});
     }
     if (!bcrypt.compareSync(password, usuario.senhaUsuario)) {
-      return res.status(401).json("Senha inválida!");
+      return res.status(401).json({errorMessage: "Senha ou e-mail incorreto!"});
     }
     const token = jwt.sign(
       {
