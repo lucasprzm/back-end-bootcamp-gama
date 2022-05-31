@@ -1,1 +1,1 @@
-web: $env:DEBUG='back-end-projeto-gama:*'; npm start
+web: npm start
