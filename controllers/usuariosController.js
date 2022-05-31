@@ -40,8 +40,7 @@ const usuariosController = {
   async userName(req,res) {
     const token = req.headers["authorization"];
     const id = jwt.verify(token, secret.key, (err, decoded) => {
-      console.log(decoded)
-      return decoded.idUsuario
+     return decoded.idUsuario
     });
     const usuario = await Usuarios.findOne({
       where: {
