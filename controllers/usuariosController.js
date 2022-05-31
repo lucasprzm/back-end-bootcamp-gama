@@ -13,7 +13,7 @@ const usuariosController = {
       },
     });
     if (usuario) {
-      return res.status(409).json({ mensagemDeErro: "Usuário já cadastrado!" });
+      return res.status(409).json({ errorMessage: "Usuário já cadastrado!" });
     }
     const usuarioCriado = await Usuarios.create({
       nomeUsuario: name,
