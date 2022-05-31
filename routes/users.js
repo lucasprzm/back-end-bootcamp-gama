@@ -14,7 +14,7 @@ router.post("/login", authController.login);
 router.get("/pontos", usuariosController.buscarPontos);
 
 // Buscar nome de Usuário
-router.post('/username', usuariosController.userName)
+router.get('/username', usuariosController.userName)
 
 // Validação do token
 router.get("/token-validation", checkToken);
