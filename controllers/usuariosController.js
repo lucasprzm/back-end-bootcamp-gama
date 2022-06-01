@@ -78,7 +78,9 @@ const usuariosController = {
              <p>Acesse o endereço para alterar sua senha: </p><a href="https://ga-up-money.netlify.app/${emailToken}">https://ga-up-money.netlify.app/${emailToken}`, // html body
     });
     console.log("Message sent: %s", info.messageId);
-    res.status(200).json({ message: "E-mail enviado para alteração de senha!", token: emailToken });
+    return res
+      .status(200)
+      .json({ message: "E-mail enviado para alteração de senha!", token: emailToken });
   },
   async passwordChange(req, res) {
     const token = req.headers["authorization"];
@@ -95,7 +97,7 @@ const usuariosController = {
         },
       }
     );
-    res.status(200).json({ message: "Senha alterada!" });
+    return res.status(200).json({ message: "Senha alterada!" });
   },
 };
 
