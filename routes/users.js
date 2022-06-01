@@ -14,9 +14,15 @@ router.post("/login", authController.login);
 router.get("/pontos", usuariosController.buscarPontos);
 
 // Buscar nome de Usuário
-router.get('/username', usuariosController.userName)
+router.get("/username", usuariosController.userName);
 
 // Validação do token
 router.get("/token-validation", checkToken);
+
+// Recebimento do e-mail do usuário para recuperação de senha e envio do e-mail
+router.post("/password-recovery", usuariosController.passwordRecovery);
+
+// Alteração da senha do usuário após a solicitação de recuperação
+router.put("/password-change", usuariosController.passwordChange);
 
 module.exports = router;
