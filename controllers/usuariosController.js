@@ -47,7 +47,26 @@ const usuariosController = {
         idUsuario: id,
       },
     });
-    return res.json(usuario.nomeUsuario);
+    return res.json({name: usuario.nomeUsuario});
+  },
+  async passwordRecovery(req,res) {
+    const email = req.body
+    const usuario = await Usuarios.findOne({
+      where: {
+        emailUsuario: email,
+      },
+    });
+    if (!usuario) {
+      return res.status(400).json({errorMessage: "Usuário não cadastrado!"});
+    }
+    const emailToken = jwt.sign(
+      {
+        emailUsuario: usuario.emailUsuario,
+      },
+      secret.key,
+      { expiresIn: "2h" }
+    );
+    
   }
 };
 
