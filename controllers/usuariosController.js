@@ -73,9 +73,9 @@ const usuariosController = {
       to: email, // list of receivers
       subject: "Recuperação de Senha", // Subject line
       text: `Olá! Você solicitou a alteração de senha do app Up Money!
-            Acesse o endereço para alterar sua senha: https://ga-up-money.netlify.app/${emailToken}`, // plain text body
+            Acesse o endereço para alterar sua senha: https://ga-up-money.netlify.app/password-change/${emailToken}`, // plain text body
       html: `<p>Olá! Você solicitou a alteração de senha do app Up Money!</p>
-             <p>Acesse o endereço para alterar sua senha: </p><a href="https://ga-up-money.netlify.app/${emailToken}">https://ga-up-money.netlify.app/${emailToken}`, // html body
+             <p>Acesse o endereço para alterar sua senha: </p><a href="https://ga-up-money.netlify.app/password-change/${emailToken}">https://ga-up-money.netlify.app/password-change/${emailToken}`, // html body
     });
     console.log("Message sent: %s", info.messageId);
     return res
