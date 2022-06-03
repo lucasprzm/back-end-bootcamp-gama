@@ -73,50 +73,54 @@ const usuariosController = {
     if (!usuario) {
       return res.status(400).json({ errorMessage: "Usuário não cadastrado!" });
     }
-    const basicAuthToken = btoa(`${email}:${process.env.RECOVER_PASSWORD_KEY}`);
-    // const emailToken = jwt.sign(
-    //   {
-    //     emailUsuario: usuario.emailUsuario,
-    //   },
-    //   secret.key,
-    //   { expiresIn: "2h" }
-    // );
-    // send mail with defined transport object
+    // const basicAuthToken = btoa(`${email}:${process.env.RECOVER_PASSWORD_KEY}`);
+    const emailToken = jwt.sign(
+      {
+        emailUsuario: usuario.emailUsuario,
+      },
+      secret.key,
+      { expiresIn: "2h" }
+    );
+
     let info = await transporter.sendMail({
-      from: '"Up Money" <up.money.gama@gmail.com>', // sender address
-      to: email, // list of receivers
-      subject: "Recuperação de Senha", // Subject line
+      from: '"Up Money" <up.money.gama@gmail.com>',
+      to: email,
+      subject: "Recuperação de Senha",
       html: `<p>Olá! Você solicitou a alteração de senha do app Up Money!</p>
-             <p>Acesse o endereço para alterar sua senha: </p><a href="${process.env.WEB_URL}/password-change/${basicAuthToken}">${process.env.WEB_URL}/password-change/${basicAuthToken}</a>`, // html body
+             <p>Acesse o endereço para alterar sua senha: </p><a href="${process.env.WEB_URL}/password-change?token=${emailToken}">${process.env.WEB_URL}/password-change?token=${emailToken}</a>`,
     });
     console.log("Message sent: %s", info.messageId);
     return res.status(200).json({
       message: "E-mail enviado para alteração de senha!",
-      token: basicAuthToken,
+      token: emailToken,
     });
   },
   async passwordChange(req, res) {
-    const basicAuthToken = req.headers["authorization"];
-    const token = basicAuthToken.split(" ")[1];
-    const decodedToken = atob(token);
-    const [email, recoverPassword] = decodedToken.split(":");
-    if (recoverPassword == process.env.RECOVER_PASSWORD_KEY) {
-      const { password } = req.body;
-      const newPassword = bcrypt.hashSync(password, 10);
-      const user = await Usuarios.findOne({
-        where: {
-          emailUsuario: email,
-        },
-      });
-      if (!user) {
-        return res.status(404).json({ message: "Usuário não encontrado!" });
-      }
-      await user.update({ senhaUsuario: newPassword });
+    const jwtToken = req.headers["authorization"];
+    const token = jwtToken.split(" ")[1];
+    const email = jwt.verify(token, secret.key, (err, decoded) => {
+      return decoded.emailUsuario;
+    });
 
-      return res.status(200).json({ message: "Senha alterada!" });
-    } else {
-      return res.status(401).json({ message: "Token inválido!" });
-    }
+    //const decodedToken = atob(token);
+    //const [email, recoverPassword] = decodedToken.split(":");
+    // if (recoverPassword == process.env.RECOVER_PASSWORD_KEY) {
+    const { password } = req.body;
+    const newPassword = bcrypt.hashSync(password, 10);
+    const user = await Usuarios.findOne({
+      where: {
+        emailUsuario: email,
+      },
+    });
+    //   if (!user) {
+    //     return res.status(404).json({ message: "Usuário não encontrado!" });
+    //   }
+    await user.update({ senhaUsuario: newPassword });
+
+    return res.status(200).json({ message: "Senha alterada!" });
+    // } else {
+    //   return res.status(401).json({ message: "Token inválido!" });
+    // }
   },
 };
 
