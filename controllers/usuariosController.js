@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret");
 const transporter = require("../helpers/transporter");
+require("dotenv/config");
 
 const usuariosController = {
   async registro(req, res) {
@@ -72,49 +73,50 @@ const usuariosController = {
     if (!usuario) {
       return res.status(400).json({ errorMessage: "Usuário não cadastrado!" });
     }
-    const emailToken = jwt.sign(
-      {
-        emailUsuario: usuario.emailUsuario,
-      },
-      secret.key,
-      { expiresIn: "2h" }
-    );
+    const basicAuthToken = btoa(`${email}:${process.env.RECOVER_PASSWORD_KEY}`);
+    // const emailToken = jwt.sign(
+    //   {
+    //     emailUsuario: usuario.emailUsuario,
+    //   },
+    //   secret.key,
+    //   { expiresIn: "2h" }
+    // );
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: '"Up Money" <up.money.gama@gmail.com>', // sender address
       to: email, // list of receivers
       subject: "Recuperação de Senha", // Subject line
-      text: `Olá! Você solicitou a alteração de senha do app Up Money!
-            Acesse o endereço para alterar sua senha: https://ga-up-money.netlify.app/password-change/${encodeURIComponent(
-              emailToken
-            )}`, // plain text body
       html: `<p>Olá! Você solicitou a alteração de senha do app Up Money!</p>
-             <p>Acesse o endereço para alterar sua senha: </p><a href="https://ga-up-money.netlify.app/password-change/${encodeURIComponent(
-               emailToken
-             )}">https://ga-up-money.netlify.app/password-change/${encodeURIComponent(emailToken)}`, // html body
+             <p>Acesse o endereço para alterar sua senha: </p><a href="${process.env.WEB_URL}/password-change/${basicAuthToken}">${process.env.WEB_URL}/password-change/${basicAuthToken}</a>`, // html body
     });
     console.log("Message sent: %s", info.messageId);
     return res.status(200).json({
       message: "E-mail enviado para alteração de senha!",
-      token: encodeURIComponent(emailToken),
+      token: basicAuthToken,
     });
   },
   async passwordChange(req, res) {
-    const token = req.headers["authorization"];
-    const { password } = req.body;
-    const newPassword = bcrypt.hashSync(password, 10);
-    const email = jwt.verify(decodeURIComponent(token), secret.key, (err, decoded) => {
-      return decoded.emailUsuario;
-    });
-    await Usuarios.update(
-      { senhaUsuario: newPassword },
-      {
+    const basicAuthToken = req.headers["authorization"];
+    const token = basicAuthToken.split(" ")[1];
+    const decodedToken = atob(token);
+    const [email, recoverPassword] = decodedToken.split(":");
+    if (recoverPassword == process.env.RECOVER_PASSWORD_KEY) {
+      const { password } = req.body;
+      const newPassword = bcrypt.hashSync(password, 10);
+      const user = await Usuarios.findOne({
         where: {
           emailUsuario: email,
         },
+      });
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado!" });
       }
-    );
-    return res.status(200).json({ message: "Senha alterada!" });
+      await user.update({ senhaUsuario: newPassword });
+
+      return res.status(200).json({ message: "Senha alterada!" });
+    } else {
+      return res.status(401).json({ message: "Token inválido!" });
+    }
   },
 };
 
