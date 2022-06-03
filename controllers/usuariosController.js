@@ -47,7 +47,7 @@ const usuariosController = {
     });
     return res.json(usuario.pontos);
   },
-  async userName(req, res) {
+  async userData(req, res) {
     const token = req.headers["authorization"];
     const id = jwt.verify(token, secret.key, (err, decoded) => {
       return decoded.idUsuario;
@@ -58,7 +58,7 @@ const usuariosController = {
           idUsuario: id,
         },
       });
-      return res.json({ name: usuario.nomeUsuario });
+      return res.json({ name: usuario.nomeUsuario, email: usuario.emailUsuario });
     } catch (error) {
       res.status(400).send({ error: "Erro ao buscar nome do usuário, tente novamente!" });
     }
