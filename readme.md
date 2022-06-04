@@ -2,20 +2,20 @@
 
 ### Tecnologias Utilizadas
 
-NodeJS com Express, Sequelize, MySQL, Express Validator, BcryptJS e JWT.
+NodeJS com Express, Sequelize, MySQL, BcryptJS e JWT.
 
 #### Funcionalidades
 
 ##### Endpoints
 
-- Documentação: https://documenter.getpostman.com/view/18322573/Uz5AryNP
+- Documentação no Postman: https://documenter.getpostman.com/view/18322573/Uz5AryNP
 
 ##### Instruções para rodar o projeto
 
 - npm install - para instalar as dependências.
 
-- $env:DEBUG='back-end-bootcamp-una:\*'; npm start - para iniciar o back-end na porta 3000.
+- $env:DEBUG='back-end-bootcamp-una:\*'; npm start - para iniciar o back-end na porta 3001.
 
-##### Diagrama das Tabelas
+##### Site Up Money (Front-end da Aplicação)
 
-![Image](./diagrama-tabelas.png "Diagrama das Tabelas")
+- https://ga-up-money.netlify.app/
