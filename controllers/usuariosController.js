@@ -65,35 +65,36 @@ const usuariosController = {
   },
   async passwordRecovery(req, res) {
     const { email } = req.body;
-    try {
-      const usuario = await Usuarios.findOne({
-        where: {
-          emailUsuario: email,
-        },
-      });
-      if (!usuario) {
-        return res.status(404).json({ errorMessage: "Usuário não cadastrado!" });
-      }
-      const emailToken = jwt.sign(
-        {
-          emailUsuario: usuario.emailUsuario,
-        },
-        secret.key,
-        { expiresIn: "2h" }
-      );
-      await transporter.sendMail({
-        from: '"Up Money" <up.money.gama@gmail.com>',
-        to: email,
-        subject: "Recuperação de Senha",
-        html: `<p>Olá! Você solicitou a alteração de senha do app Up Money!</p>
-               <p>Acesse o endereço para alterar sua senha: </p><a href="${process.env.WEB_URL}/password-change?token=${emailToken}">${process.env.WEB_URL}/password-change?token=${emailToken}</a>`,
-      });
-      return res.status(200).json({
-        message: "E-mail enviado para alteração de senha!",
-      });
-    } catch (error) {
-      res.status(400).send({ error: "Erro ao verificar e-mail, tente novamente!" });
+    // try {
+    const usuario = await Usuarios.findOne({
+      where: {
+        emailUsuario: email,
+      },
+    });
+    if (!usuario) {
+      return res.status(404).json({ errorMessage: "Usuário não cadastrado!" });
     }
+    const emailToken = jwt.sign(
+      {
+        emailUsuario: usuario.emailUsuario,
+      },
+      secret.key,
+      { expiresIn: "2h" }
+    );
+    let info = await transporter.sendMail({
+      from: '"Up Money" <up.money.gama@gmail.com>',
+      to: email,
+      subject: "Recuperação de Senha",
+      html: `<p>Olá! Você solicitou a alteração de senha do app Up Money!</p>
+               <p>Acesse o endereço para alterar sua senha: </p><a href="${process.env.WEB_URL}/password-change?token=${emailToken}">${process.env.WEB_URL}/password-change?token=${emailToken}</a>`,
+    });
+    console.log(info.messageId);
+    return res.status(200).json({
+      message: "E-mail enviado para alteração de senha!",
+    });
+    // } catch (error) {
+    //   res.status(400).send({ error: "Erro ao verificar e-mail, tente novamente!" });
+    // }
   },
   async passwordChange(req, res) {
     const jwtToken = req.headers["authorization"];
