@@ -72,7 +72,7 @@ const usuariosController = {
         },
       });
       if (!usuario) {
-        return res.status(400).json({ errorMessage: "Usuário não cadastrado!" });
+        return res.status(404).json({ errorMessage: "Usuário não cadastrado!" });
       }
       const emailToken = jwt.sign(
         {
