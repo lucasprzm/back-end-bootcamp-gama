@@ -6,8 +6,8 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var metasRouter = require("./routes/metas");
-var tarefasRouter = require("./routes/tarefas");
+var goalsRouter = require("./routes/goals");
+var tasksRouter = require("./routes/tasks");
 
 var app = express();
 const cors = require("cors");
@@ -26,8 +26,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/metas", metasRouter);
-app.use("/tarefas", tarefasRouter);
+app.use("/goals", goalsRouter);
+app.use("/tasks", tasksRouter);
 
 db.hasConnection();
 // catch 404 and forward to error handler

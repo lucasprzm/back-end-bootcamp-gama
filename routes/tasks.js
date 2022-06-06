@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const tarefasController = require("../controllers/tarefasController");
+const tasksController = require("../controllers/tasksController");
 
 // Adicionar pontos da tarefa concluída e mudar para a próxima tarefa.
-router.put("/atualizar", tarefasController.adicionarPontos, tarefasController.mudarTarefa);
+router.put("/update", tasksController.adicionarPontos, tasksController.mudarTarefa);
 
 module.exports = router;

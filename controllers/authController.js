@@ -1,4 +1,4 @@
-const { Usuarios } = require("../models");
+const { Users } = require("../models");
 const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
@@ -8,20 +8,20 @@ const authController = {
   async login(req, res) {
     const { email, password } = req.body;
     try {
-      const usuario = await Usuarios.findOne({
+      const user = await Users.findOne({
         where: {
-          emailUsuario: email,
+          userEmail: email,
         },
       });
-      if (!usuario) {
+      if (!user) {
         return res.status(400).json({ errorMessage: "Senha ou e-mail incorreto!" });
       }
-      if (!bcrypt.compareSync(password, usuario.senhaUsuario)) {
+      if (!bcrypt.compareSync(password, user.userPassword)) {
         return res.status(401).json({ errorMessage: "Senha ou e-mail incorreto!" });
       }
       const token = jwt.sign(
         {
-          idUsuario: usuario.idUsuario,
+          userId: user.userId,
         },
         secret.key,
         { expiresIn: "24h" }
